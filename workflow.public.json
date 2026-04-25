@@ -1,0 +1,868 @@
+{
+  "name": "🌅 MorningBrief",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🔗 Integrations\n\nEdit the config once, then attach your Telegram, Notion, weather, and Google Calendar inputs.",
+        "height": 220,
+        "width": 540,
+        "color": 6
+      },
+      "id": "a4dab1b4-0ba8-4798-a676-cce061617e0d",
+      "name": "Sticky Note Integrations",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -96
+      ],
+      "notesInFlow": false,
+      "notes": "Section label for configuration and external integrations."
+    },
+    {
+      "parameters": {
+        "content": "## 📡 News Sources\n\nThe workflow fans out into independent fetch branches so one slow or broken source does not block the rest.",
+        "height": 220,
+        "width": 1100,
+        "color": 4
+      },
+      "id": "5f9e3b4b-eb15-4fea-9aa5-a7c835cf663c",
+      "name": "Sticky Note Sources",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -96
+      ],
+      "notesInFlow": false,
+      "notes": "Section label for the parallel fetch branches."
+    },
+    {
+      "parameters": {
+        "content": "## 🛠 Processing\n\nEach branch formats its own Telegram-ready section before the multi-input merge.",
+        "height": 220,
+        "width": 1040,
+        "color": 5
+      },
+      "id": "4ea25205-5510-4fe2-839e-fb12fca25068",
+      "name": "Sticky Note Processing",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        -96
+      ],
+      "notesInFlow": false,
+      "notes": "Section label for formatter, parser, and merge nodes."
+    },
+    {
+      "parameters": {
+        "content": "## 📤 Output\n\nMerge, assemble, split for Telegram length limits, then send the final briefing.",
+        "height": 220,
+        "width": 560,
+        "color": 7
+      },
+      "id": "5f4fce44-5e94-4206-a79b-d1bdf4e43d5b",
+      "name": "Sticky Note Output",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3120,
+        -96
+      ],
+      "notesInFlow": false,
+      "notes": "Section label for merge, assembly, and Telegram delivery."
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b11d4c50-589d-4650-98c3-86d680e418cb",
+              "name": "profile",
+              "value": "student",
+              "type": "string"
+            },
+            {
+              "id": "1044e9e7-f042-4fd1-99d8-b7fc3a434dcb",
+              "name": "city",
+              "value": "Your City",
+              "type": "string"
+            },
+            {
+              "id": "84fe9f6e-a1a8-4ca4-b9b4-f07b4f34f7d6",
+              "name": "timezone",
+              "value": "Asia/Kolkata",
+              "type": "string"
+            },
+            {
+              "id": "2739a76d-ac44-41d5-a133-c20c8935fcca",
+              "name": "firstName",
+              "value": "Your Name",
+              "type": "string"
+            },
+            {
+              "id": "9650981d-a826-4a53-9cea-e4838b066876",
+              "name": "enableNotion",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "5408113e-c22b-4ca7-a278-f24af8ca2f57",
+              "name": "enableCalendar",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "c5307070-ec56-448f-9208-a33a8f7daa13",
+              "name": "enableTimetable",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "77910888-f4bf-470b-bf92-67e93f815d44",
+              "name": "enableWeather",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "0a0f751e-5a4a-4085-8bfa-f4f9f0af71af",
+              "name": "enableAINews",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "1b935f69-b529-4d4f-8ee2-4e85a273f633",
+              "name": "enableTechNews",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "6bfaf32a-cd78-4325-8bb6-6e20c66514f8",
+              "name": "enableArxiv",
+              "value": "true",
+              "type": "string"
+            },
+            {
+              "id": "fb4bc8c7-6a51-41fa-b6dc-0db0654c37b8",
+              "name": "enableOpenAI",
+              "value": "true",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a595aa27-c102-4ca7-b80e-03d82f51bd2e",
+      "name": "⚙️ Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        240,
+        304
+      ],
+      "notesInFlow": true,
+      "notes": "👆 Edit these values to customize your briefing.\nSet enable* to 'false' to skip any section."
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "30 7 * * *"
+            }
+          ]
+        }
+      },
+      "id": "ce692373-ffa4-4cb1-9173-2e24dc36ca68",
+      "name": "⏰ Morning Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        240,
+        512
+      ],
+      "notesInFlow": true,
+      "notes": "Change this cron to your preferred time.\nFormat: MM HH * * * (minute hour)\n7:30 AM = 30 7 * * *\n8:00 AM = 0 8 * * *"
+    },
+    {
+      "parameters": {
+        "url": "https://api.openweathermap.org/data/2.5/weather",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $('⚙️ Config').first().json.city }}"
+            },
+            {
+              "name": "appid",
+              "value": "={{ $env.OPENWEATHER_API_KEY || $vars.OPENWEATHER_API_KEY || '' }}"
+            },
+            {
+              "name": "units",
+              "value": "metric"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "28854c3f-1d4c-413c-9f82-e3b6f0503ad1",
+      "name": "🌤 Fetch Weather",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1072,
+        144
+      ],
+      "notesInFlow": true,
+      "onError": "continueErrorOutput",
+      "notes": "Fetches the current weather for the configured city. Set OPENWEATHER_API_KEY in n8n variables or environment if you don't attach a credential directly."
+    },
+    {
+      "parameters": {},
+      "id": "7f1b8f11-ee43-4497-8ba5-a08193319f56",
+      "name": "🌤 Weather Error Pass-through",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        272
+      ],
+      "notesInFlow": true,
+      "notes": "Takes HTTP error output so the weather branch can still produce a null section."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\nif ((config.enableWeather || 'true').toLowerCase() !== 'true') {\n  return [{ json: { weather: null } }];\n}\n\nconst data = $input.first()?.json || {};\nif (!data || data.error || Number(data.cod) !== 200 || !data.weather || !data.main) {\n  return [{ json: { weather: null } }];\n}\n\nconst emojiMap = {\n  thunderstorm: '⛈',\n  drizzle: '🌦',\n  rain: '🌧',\n  snow: '❄️',\n  mist: '🌫',\n  smoke: '🌫',\n  haze: '🌫',\n  dust: '🌫',\n  fog: '🌫',\n  sand: '🌫',\n  ash: '🌫',\n  squall: '🌬',\n  tornado: '🌪',\n  clear: '☀️',\n  clouds: '⛅'\n};\n\nconst main = String(data.weather?.[0]?.main || '').toLowerCase();\nconst description = String(data.weather?.[0]?.description || 'Weather unavailable');\nconst emoji = emojiMap[main] || '🌤';\n\nconst section = [\n  '🌤 <b>Weather</b>',\n  `${emoji} ${description} • ${Math.round(Number(data.main.temp))}°C (feels like ${Math.round(Number(data.main.feels_like))}°C)`,\n  `↑ ${Math.round(Number(data.main.temp_max))}° ↓ ${Math.round(Number(data.main.temp_min))}°`\n].join('\\n');\n\nreturn [{ json: { weather: section } }];"
+      },
+      "id": "e54817d1-935e-431c-917c-b60b03d39610",
+      "name": "🌤 Format Weather",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        144
+      ],
+      "notesInFlow": true,
+      "notes": "Formats the weather response into a compact Telegram section."
+    },
+    {
+      "parameters": {
+        "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
+        "options": {}
+      },
+      "id": "779ea9d8-af74-435e-8a61-f050a63362aa",
+      "name": "💻 Fetch HackerNews",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1072,
+        368
+      ],
+      "notesInFlow": true,
+      "onError": "continueErrorOutput",
+      "notes": "Fetches the current list of top Hacker News story IDs."
+    },
+    {
+      "parameters": {},
+      "id": "2bec6b01-d1c9-4a9d-a760-7738b2c25c5d",
+      "name": "💻 HN Error Pass-through",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        496
+      ],
+      "notesInFlow": true,
+      "notes": "Takes HTTP error output so the tech news branch still resolves cleanly."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\n\nif ((config.enableTechNews || 'true').toLowerCase() !== 'true') {\n  return [{ json: { techNews: null } }];\n}\n\nconst ids = $input.all().map(item => item.json).filter(id => typeof id === 'number');\n\nif (!ids.length) {\n  return [{ json: { techNews: null } }];\n}\n\nconst shortlist = ids.slice(0, 30);\nconst results = [];\n\nfor (let i = 0; i < shortlist.length; i += 10) {\n  const batch = shortlist.slice(i, i + 10);\n\n  const fetched = await Promise.all(\n    batch.map(async (id) => {\n      try {\n        return await this.helpers.httpRequest({\n          method: 'GET',\n          url: `https://hacker-news.firebaseio.com/v0/item/${id}.json`,\n          json: true,\n        });\n      } catch {\n        return null;\n      }\n    })\n  );\n\n  results.push(...fetched.filter(Boolean));\n}\n\nconst stories = results\n  .filter(s => s && s.type === 'story' && s.url && Number(s.score || 0) > 50)\n  .sort((a, b) => Number(b.score || 0) - Number(a.score || 0))\n  .slice(0, 8);\n\nif (!stories.length) {\n  return [{ json: { techNews: '📰 <b>News Highlights</b>\\n<i>No news found today</i>' } }];\n}\n\nconst lines = ['📰 <b>News Highlights</b>'];\n\nfor (let i = 0; i < stories.length; i++) {\n  const s = stories[i];\n  lines.push(`${i + 1}. <b>${s.title}</b>`);\n  lines.push(`   🔗 <a href=\"${s.url}\">Read more</a>`);\n  lines.push('');\n}\n\nreturn [{ json: { techNews: lines.join('\\n').trim() } }];\n"
+      },
+      "id": "f078e708-88b8-42ad-94ac-5eaffe02b303",
+      "name": "💻 Fetch HN Stories",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        368
+      ],
+      "notesInFlow": true,
+      "notes": "Fetches the top stories in batches and keeps the strongest technology headlines."
+    },
+    {
+      "parameters": {
+        "url": "http://export.arxiv.org/api/query",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "search_query",
+              "value": "cat:cs.AI OR cat:cs.LG"
+            },
+            {
+              "name": "sortBy",
+              "value": "submittedDate"
+            },
+            {
+              "name": "sortOrder",
+              "value": "descending"
+            },
+            {
+              "name": "max_results",
+              "value": "15"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "5c1de286-3bd3-4d1b-8c67-109a6d39aef9",
+      "name": "🤖 Fetch ArXiv",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1072,
+        592
+      ],
+      "notesInFlow": true,
+      "onError": "continueErrorOutput",
+      "notes": "Fetches the latest ArXiv entries for AI and ML categories as raw XML text."
+    },
+    {
+      "parameters": {},
+      "id": "610f89ce-3056-4ffd-910f-b61a0b5b263c",
+      "name": "🤖 ArXiv Error Pass-through",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        704
+      ],
+      "notesInFlow": true,
+      "notes": "Passes ArXiv HTTP errors forward so the parser can emit a null section instead of stopping."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\n\nif (\n  (config.enableAINews || 'true').toLowerCase() !== 'true' ||\n  (config.enableArxiv || 'true').toLowerCase() !== 'true'\n) {\n  return [{ json: { arxiv: null } }];\n}\n\nconst item = $input.first();\nconst text =\n  typeof item.json === 'string'\n    ? item.json\n    : JSON.stringify(item.json || {});\n\nconst clean = (value) => String(value || '').replace(/\\s+/g, ' ').trim();\n\nconst matches = [...text.matchAll(/<entry>([\\s\\S]*?)<\\/entry>/g)];\n\nif (!matches.length) {\n  return [{ json: { arxiv: '<b>Latest Highlights</b>\\n<i>No papers found</i>' } }];\n}\n\nconst entries = matches\n  .map((match) => match[1])\n  .map((entry) => {\n    const titleMatch = entry.match(/<title>([\\s\\S]*?)<\\/title>/);\n    const linkMatch = entry.match(/<id>(https?:\\/\\/arxiv\\.org\\/abs\\/[^<]+)<\\/id>/);\n    const summaryMatch = entry.match(/<summary>([\\s\\S]*?)<\\/summary>/);\n\n    if (!titleMatch || !linkMatch) return null;\n\n    return {\n      title: clean(titleMatch[1]),\n      link: clean(linkMatch[1]),\n      summary: summaryMatch ? clean(summaryMatch[1]).slice(0, 120) + '...' : '',\n    };\n  })\n  .filter(Boolean)\n  .slice(0, 10);\n\nif (!entries.length) {\n  return [{ json: { arxiv: '<b>Latest Highlights</b>\\n<i>No papers found</i>' } }];\n}\n\nconst lines = ['<b>Latest Highlights</b>'];\n\nfor (let i = 0; i < entries.length; i++) {\n  const item = entries[i];\n  lines.push(`${i + 1}. <b>${item.title}</b>`);\n  if (item.summary) lines.push(`   ${item.summary}`);\n  lines.push(`   🔗 <a href=\"${item.link}\">Read more</a>`);\n  lines.push('');\n}\n\nreturn [{ json: { arxiv: lines.join('\\n').trim() } }];\n"
+      },
+      "id": "611a3499-4cf0-490b-b6f3-c9fb28d0cb44",
+      "name": "🤖 Parse ArXiv",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        592
+      ],
+      "notesInFlow": true,
+      "notes": "Pulls out the first ArXiv entry and formats a short AI paper summary."
+    },
+    {
+      "parameters": {
+        "url": "https://openai.com/blog/rss.xml",
+        "options": {}
+      },
+      "id": "73001d90-d190-4709-9410-250ac702d62e",
+      "name": "🔔 Fetch OpenAI RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        816
+      ],
+      "notesInFlow": true,
+      "onError": "continueRegularOutput",
+      "notes": "Reads the OpenAI blog RSS feed."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\nif ((config.enableAINews || 'true').toLowerCase() !== 'true' || (config.enableOpenAI || 'true').toLowerCase() !== 'true') {\n  return [{ json: { openaiNews: null } }];\n}\n\nconst items = $input.all();\nif (!items.length || !items[0].json?.link || !items[0].json?.title) {\n  return [{ json: { openaiNews: null } }];\n}\n\nconst item = items[0].json;\nreturn [{ json: { openaiNews: `🔔 <b>OpenAI:</b> <a href=\"${item.link}\">${item.title}</a>` } }];"
+      },
+      "id": "406bda16-7818-481c-a680-5b8aee6eaa2d",
+      "name": "🔔 Parse OpenAI RSS",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        816
+      ],
+      "notesInFlow": true,
+      "notes": "Formats the latest OpenAI RSS item as a single line."
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "replace-with-your-notion-database-id",
+          "mode": "id"
+        },
+        "limit": 8,
+        "options": {}
+      },
+      "id": "e5679c84-32e2-4a2a-bc86-1073aec3c751",
+      "name": "📋 Fetch Notion Tasks",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1072,
+        1088
+      ],
+      "notesInFlow": true,
+      "onError": "continueRegularOutput",
+      "notes": "Fetches up to eight pages from your Notion task database. Replace the database ID and connect your Notion credential after import."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\nif ((config.enableNotion || 'true').toLowerCase() !== 'true') {\n  return [{ json: { tasks: null } }];\n}\n\nconst pages = $input.all();\nif (!pages.length || !pages[0].json?.properties) {\n  return [{ json: { tasks: null } }];\n}\n\nconst getStatusName = (props) => props?.Status?.status?.name || props?.Status?.select?.name || props?.State?.status?.name || '';\nconst tasks = pages\n  .map((p) => {\n    const props = p.json.properties || {};\n    const status = getStatusName(props).toLowerCase();\n    if (status === 'done' || status === 'completed') return null;\n    const name = props?.Name?.title?.[0]?.plain_text || props?.Task?.title?.[0]?.plain_text || 'Untitled';\n    const project = props?.Project?.select?.name || props?.Project?.multi_select?.[0]?.name || '';\n    return project ? `• ${name} — <i>${project}</i>` : `• ${name}`;\n  })\n  .filter(Boolean)\n  .slice(0, 8);\n\nif (!tasks.length) {\n  return [{ json: { tasks: '📋 <b>Your Tasks</b>\\n<i>No open tasks found</i>' } }];\n}\n\nreturn [{ json: { tasks: ['📋 <b>Your Tasks</b>', ...tasks].join('\\n') } }];"
+      },
+      "id": "c884d860-bfc4-4bd8-94a6-43897f148ae8",
+      "name": "📋 Format Notion Tasks",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        1248
+      ],
+      "notesInFlow": true,
+      "notes": "Formats Notion database pages into a short task list and skips completed items when a status property exists."
+    },
+    {
+      "parameters": {
+        "url": "={{ $vars.GCAL_ICAL_URL || '' }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "id": "ee07ed72-8094-49a0-ae34-65006efa5628",
+      "name": "📅 Fetch Calendar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1072,
+        1328
+      ],
+      "notesInFlow": true,
+      "onError": "continueErrorOutput",
+      "notes": "Set GCAL_ICAL_URL in n8n Variables (Settings → Variables). Get it from Google Calendar → Settings → your calendar → Secret address in iCal format."
+    },
+    {
+      "parameters": {},
+      "id": "7b76bc30-53f6-4103-80c7-4867ce7d5304",
+      "name": "📅 Calendar Error Pass-through",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        1584
+      ],
+      "notesInFlow": true,
+      "notes": "Takes calendar HTTP errors so the formatter can return a clean null or fallback section."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\nif ((config.enableCalendar || 'true').toLowerCase() !== 'true') {\n  return [{ json: { calendar: null } }];\n}\n\nconst raw = $input.first()?.json || {};\nconst text = raw.data || raw.body || raw.rawBody || Object.values(raw).find((value) => typeof value === 'string') || '';\nif (!text || typeof text !== 'string') {\n  return [{ json: { calendar: null } }];\n}\n\nconst timezone = config.timezone || 'Asia/Kolkata';\nconst parts = new Intl.DateTimeFormat('en-CA', {\n  timeZone: timezone,\n  year: 'numeric',\n  month: '2-digit',\n  day: '2-digit'\n}).formatToParts(new Date());\nconst current = Object.fromEntries(parts.map((part) => [part.type, part.value]));\nconst todayStr = `${current.year}${current.month}${current.day}`;\n\nconst events = [];\nconst eventBlocks = text.match(/BEGIN:VEVENT[\\s\\S]*?END:VEVENT/g) || [];\nfor (const block of eventBlocks) {\n  const dtstart = block.match(/DTSTART[^:]*:(\\d{8}(T\\d{4,6}Z?)?)/)?.[1];\n  const summary = block.match(/SUMMARY:(.+)/)?.[1]?.trim();\n  const location = block.match(/LOCATION:(.+)/)?.[1]?.trim();\n  if (!dtstart || !summary) continue;\n  if (!dtstart.startsWith(todayStr)) continue;\n\n  let time = 'All day';\n  const compact = dtstart.replace(/[^0-9]/g, '');\n  if (compact.length >= 12) {\n    const hour = compact.slice(8, 10);\n    const min = compact.slice(10, 12);\n    time = `${hour}:${min}`;\n  }\n\n  events.push({ time, summary, location });\n}\n\nconst normalize = (value) => (value === 'All day' ? '00:00' : value);\nevents.sort((a, b) => normalize(a.time).localeCompare(normalize(b.time)));\n\nif (!events.length) {\n  return [{ json: { calendar: '📅 <b>Today\\'s Events</b>\\n<i>No events today</i>' } }];\n}\n\nconst lines = events.map((e) => `• ${e.time} — ${e.summary}${e.location ? ` @ ${e.location}` : ''}`);\nreturn [{ json: { calendar: ['📅 <b>Today\\'s Events</b>', ...lines].join('\\n') } }];"
+      },
+      "id": "5e0e6a56-0cd9-4a28-b47a-5bc5b1abe7c4",
+      "name": "📅 Parse Calendar",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        1472
+      ],
+      "notesInFlow": true,
+      "notes": "Extracts today's events from a Google Calendar iCal feed and formats them for Telegram."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\nif ((config.profile || 'student').toLowerCase() !== 'student' || (config.enableTimetable || 'true').toLowerCase() !== 'true') {\n  return [{ json: { timetable: null } }];\n}\n\nconst timezone = config.timezone || 'Asia/Kolkata';\nconst weekday = new Intl.DateTimeFormat('en-US', { weekday: 'long', timeZone: timezone }).format(new Date());\nconst timetable = {\n  Monday: [\n    '09:00 - Operating Systems',\n    '11:00 - Machine Learning',\n    '14:00 - DBMS Lab'\n  ],\n  Tuesday: [\n    '10:00 - Computer Networks',\n    '13:00 - Deep Learning Seminar'\n  ],\n  Wednesday: [\n    '09:30 - Algorithms',\n    '12:00 - Project Work'\n  ],\n  Thursday: [\n    '10:00 - Software Engineering',\n    '15:00 - Placement Prep'\n  ],\n  Friday: [\n    '08:30 - Revision Block',\n    '11:00 - Research Reading',\n    '14:00 - Lab / Assignments'\n  ],\n  Saturday: [\n    '10:00 - Personal Study'\n  ],\n  Sunday: []\n};\n\nconst entries = timetable[weekday] || [];\nif (!entries.length) {\n  return [{ json: { timetable: '🗓 <b>Today\\'s Timetable</b>\\n<i>No classes scheduled</i>' } }];\n}\n\nreturn [{ json: { timetable: ['🗓 <b>Today\\'s Timetable</b>', ...entries.map((item) => `• ${item}`)].join('\\n') } }];"
+      },
+      "id": "0be802d7-1b44-4fc6-a599-5f42eed22245",
+      "name": "🗓 Build Timetable",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        1696
+      ],
+      "notesInFlow": true,
+      "notes": "Provides a built-in editable timetable for student mode. Replace the sample schedule with your own classes."
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 8,
+        "options": {}
+      },
+      "id": "9557983f-7f10-43b3-9b96-d3474e7e1c2b",
+      "name": "🔀 Merge All Sections",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2640,
+        912
+      ],
+      "notesInFlow": true,
+      "notes": "Waits for all eight branches and emits one combined stream by position."
+    },
+    {
+      "parameters": {
+        "jsCode": "const config = $('⚙️ Config').first().json;\nconst all = $input.all().map((item) => item.json || {});\n\nconst get = (key) => {\n  for (const item of all) {\n    if (item[key]) return item[key];\n  }\n  return null;\n};\n\nconst divider = '━━━━━━━━━━━━━━━━━━━━━━';\nconst timezone = config.timezone || 'Asia/Kolkata';\nconst firstName = config.firstName || 'there';\n\nconst dateStr = new Intl.DateTimeFormat('en-US', {\n  weekday: 'long',\n  day: 'numeric',\n  month: 'short',\n  year: 'numeric',\n  timeZone: timezone,\n}).format(new Date());\n\nconst quotes = [\n  { text: 'The best way to predict the future is to invent it.', author: 'Alan Kay' },\n  { text: 'Simplicity is the ultimate sophistication.', author: 'Leonardo da Vinci' },\n  { text: 'Done is better than perfect.', author: 'Sheryl Sandberg' },\n  { text: 'What we know is a drop, what we do not know is an ocean.', author: 'Isaac Newton' },\n  { text: 'Small steps every day.', author: 'Unknown' },\n];\n\nconst quote = quotes[Math.floor(Math.random() * quotes.length)];\n\nconst sections = [];\n\n// Greeting\nsections.push(`☀️ <b>Good morning, ${firstName}!</b>\\n<i>${dateStr}</i>`);\n\n// Daily essentials\nif (get('weather')) sections.push(get('weather'));\nif (get('calendar')) sections.push(get('calendar'));\nif (get('timetable')) sections.push(get('timetable'));\nif (get('tasks')) sections.push(get('tasks'));\n\n// News first\nif (get('techNews')) sections.push(get('techNews'));\n\n// AI block after news\nconst aiItems = [get('arxiv'), get('openaiNews'), get('anthropicNews')].filter(Boolean);\nif (aiItems.length) {\n  sections.push(['🤖 <b>AI & ML</b>', ...aiItems].join('\\n\\n'));\n}\n\n// Quote last\nsections.push(`💡 <i>\"${quote.text}\"</i>\\n${quote.author}`);\n\nconst message = sections.join(`\\n\\n${divider}\\n\\n`);\n\nconst parts = [];\nlet current = '';\n\nfor (const line of message.split('\\n')) {\n  const next = current ? `${current}\\n${line}` : line;\n\n  if (next.length > 4000) {\n    if (current) parts.push(current);\n    current = line;\n  } else {\n    current = next;\n  }\n}\n\nif (current) parts.push(current);\n\nreturn parts.map((part) => ({\n  json: { message: part }\n}));\n"
+      },
+      "id": "1b1432b7-affd-4cec-9bb6-4a3cfc8b2f7a",
+      "name": "✍️ Assemble Briefing",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2960,
+        912
+      ],
+      "notesInFlow": true,
+      "notes": "Builds the final Telegram message, inserts dividers only where needed, and splits long messages into chunks."
+    },
+    {
+      "parameters": {
+        "chatId": "replace-with-your-chat-id",
+        "text": "={{ $json.message }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "id": "493934b0-0dfc-4669-b7c9-4e3f5701bfad",
+      "name": "📨 Send to Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        3280,
+        912
+      ],
+      "notesInFlow": true,
+      "notes": "Connect your Telegram credential and replace the chat ID with your own personal chat or channel target."
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "⏰ Morning Schedule": {
+      "main": [
+        [
+          {
+            "node": "⚙️ Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⚙️ Config": {
+      "main": [
+        [
+          {
+            "node": "🌤 Fetch Weather",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "💻 Fetch HackerNews",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🤖 Fetch ArXiv",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🔔 Fetch OpenAI RSS",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "📋 Fetch Notion Tasks",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "📅 Fetch Calendar",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🗓 Build Timetable",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "🌤 Fetch Weather": {
+      "main": [
+        [
+          {
+            "node": "🌤 Format Weather",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "🌤 Weather Error Pass-through",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🌤 Weather Error Pass-through": {
+      "main": [
+        [
+          {
+            "node": "🌤 Format Weather",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🌤 Format Weather": {
+      "main": [
+        [
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💻 Fetch HackerNews": {
+      "main": [
+        [
+          {
+            "node": "💻 Fetch HN Stories",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "💻 HN Error Pass-through",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💻 HN Error Pass-through": {
+      "main": [
+        [
+          {
+            "node": "💻 Fetch HN Stories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "💻 Fetch HN Stories": {
+      "main": [
+        [
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "🤖 Fetch ArXiv": {
+      "main": [
+        [
+          {
+            "node": "🤖 Parse ArXiv",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "🤖 ArXiv Error Pass-through",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖 ArXiv Error Pass-through": {
+      "main": [
+        [
+          {
+            "node": "🤖 Parse ArXiv",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🤖 Parse ArXiv": {
+      "main": [
+        [
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "🔔 Fetch OpenAI RSS": {
+      "main": [
+        [
+          {
+            "node": "🔔 Parse OpenAI RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🔔 Parse OpenAI RSS": {
+      "main": [
+        [
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "📋 Fetch Notion Tasks": {
+      "main": [
+        [
+          {
+            "node": "📋 Format Notion Tasks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📋 Format Notion Tasks": {
+      "main": [
+        [
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "📅 Fetch Calendar": {
+      "main": [
+        [
+          {
+            "node": "📅 Parse Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "📅 Calendar Error Pass-through",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📅 Calendar Error Pass-through": {
+      "main": [
+        [
+          {
+            "node": "📅 Parse Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "📅 Parse Calendar": {
+      "main": [
+        [
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 6
+          }
+        ]
+      ]
+    },
+    "🗓 Build Timetable": {
+      "main": [
+        [
+          {
+            "node": "🔀 Merge All Sections",
+            "type": "main",
+            "index": 7
+          }
+        ]
+      ]
+    },
+    "🔀 Merge All Sections": {
+      "main": [
+        [
+          {
+            "node": "✍️ Assemble Briefing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "✍️ Assemble Briefing": {
+      "main": [
+        [
+          {
+            "node": "📨 Send to Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c0c2295e-3c33-4149-af0c-b4ded3cae77c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "fbf6e0416b2b1a0908846d89c4c44e34ba94ff0899f749905921e0b4a0b1662b"
+  },
+  "id": "u8pMh3W3vFV0AfCb",
+  "tags": []
+}
