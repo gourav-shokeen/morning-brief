@@ -53,7 +53,7 @@ In n8n:
 
 1. Open `Workflows`
 2. Click `Import from File`
-3. Select [`workflow.json`](workflow.json)
+3. Select [`workflow.public.json`](workflow.public.json)
 
 ### 2. Create credentials
 
