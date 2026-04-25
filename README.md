@@ -10,7 +10,7 @@ MorningBrief runs on a schedule every morning, collects information from multipl
 
 It is designed as an open-source portfolio project:
 
-- importable `workflow.json`
+- importable `workflow.public.json`
 - self-hosted friendly
 - minimal setup friction
 - easy to customize from one config node
