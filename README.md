@@ -2,7 +2,7 @@
 
 > A self-hosted n8n workflow that sends a personalized morning briefing to Telegram with weather, calendar events, Notion tasks, AI updates, tech news, and a configurable daily summary.
 
-[Workflow screenshot placeholder](docs/workflow-screenshot.md)
+[Workflow screenshot placeholder](workflow-screenshot.png)
 
 ## What this project does
 
