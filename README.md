@@ -2,7 +2,7 @@
 
 > A self-hosted n8n workflow that sends a personalized morning briefing to Telegram with weather, calendar events, Notion tasks, AI updates, tech news, and a configurable daily summary.
 
-[Workflow screenshot placeholder](docs/workflow-screenshot.md)
+[Workflow screenshot placeholder](workflow-screenshot.png)
 
 ## What this project does
 
@@ -53,7 +53,7 @@ In n8n:
 
 1. Open `Workflows`
 2. Click `Import from File`
-3. Select [`workflow.json`](workflow.json)
+3. Select [`workflow.public.json`](workflow.public.json)
 
 ### 2. Create credentials
 
